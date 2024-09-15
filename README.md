@@ -35,7 +35,7 @@
   make app_local_compose_down
   ```
 
-## Building
+## Building 11
 * Run the below command under the root directory
   ```shell
   make app_local_build 
