@@ -1,28 +1,26 @@
-name: Build and Deploy
-
+name: EZPZOS WEB CI/CD
 on:
   push:
     branches:
-      - develop
-    paths:
-      - '**/*'
-
+      - main
+  pull_request:
+    branches:
+      - main
 jobs:
-  build-Core:
-    if: ${{ github.repository == 'EZPZ-OS/EZPZOS.Core' }}
+  build:
     runs-on: ubuntu-latest
-    outputs:
-      Core_build_status: ${{ steps.install_build_core.outcome }}
     steps:
-      - name: Checkout Core repository
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          repository: EZPZ-OS/EZPZOS.Core
-          ref: main
-
-      - name: Install and build Core
-        run: |
-          npm install
-          npm run build
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install --save-dev webpack
+      - name: Run tests
+        run: npm test
+      - name: Build
+        run: npm run build
 
 
